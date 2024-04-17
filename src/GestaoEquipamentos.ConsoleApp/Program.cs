@@ -41,31 +41,11 @@ namespace GestaoEquipamentos.ConsoleApp
                         Chamados chamados = new Chamados();
                         if (numeroDoEstoque == 0)
                         {
-                            Console.WriteLine("Impossível Cadastrar Chamados!! Você não possui equipamentos cadastrados!");
-                            Console.WriteLine("Aperte ENTER para continuar:");
-                            Console.ReadLine();
+                            ErroEmCadastrarChamado();
                         }
                         else
                         {
-                            chamados.ListaDoChamado = listaChamados;
-                            chamados.numeroDoChamado = numeroDosChamados;
-                            
-                            equipamento.ListaDeEquipamento = lista;
-                            Console.WriteLine("CHAMADO " + chamados.numeroDoChamado);
-                            Console.WriteLine("Digite o Título do Chamado:");
-                            chamados.Titulo = Console.ReadLine();
-                            Console.WriteLine("Digite a Descrição do Chamado:");
-                            chamados.Descricao = Console.ReadLine();
-                            Console.WriteLine("Digite a Data do Chamado EX:(Dia/Mês/Ano Hora:Minuto):");
-                            DataDoChamado[numeroDosChamados] = Convert.ToDateTime(Console.ReadLine());
-                            Console.WriteLine("Digite o número do equipamento que o Chamado se refere:");
-                            chamados.Equipamento = Convert.ToInt32(Console.ReadLine());
-                            DateTime dataAtual = DateTime.Now;
-                            TimeSpan diferenca = dataAtual.Subtract(DataDoChamado[numeroDosChamados]);
-                            chamados.ListaDoChamado[numeroDosChamados] = "Chamado " + numeroDosChamados + "\nTítulo: " + chamados.Titulo + "\nDescrição:" + chamados.Descricao + "\nData Inicial do Chamado: " + DataDoChamado[numeroDosChamados] + "\nTempo desde a abertura do chamado:" + diferenca.TotalDays + " dias." + "\nEquipamento: " + lista[chamados.Equipamento];
-                            Console.Clear();
-                            Console.WriteLine("Chamado Registrado!\nAperte ENTER para continuar:");
-                            Console.ReadLine();
+                            CadastrarNovoChamado(lista, listaChamados, numeroDosChamados, DataDoChamado, equipamento, chamados);
                         }
                         numeroDosChamados++;                      
                         break;
@@ -88,15 +68,50 @@ namespace GestaoEquipamentos.ConsoleApp
                     case 8:
                         sairDoSistema = false;
                         break;
-                    default: Console.WriteLine("Essa opção não está disponivel!\nAperte ENTER para voltar ao MENU!");
-                        Console.ReadLine();
-                        break;
+                    default:OpcaoIndisponivel();
+                      break;
 
                 }
 
 
 
             }
+        }
+
+        private static void OpcaoIndisponivel()
+        {
+            Console.WriteLine("Essa opção não está disponivel!\nAperte ENTER para voltar ao MENU!");
+            Console.ReadLine();
+        }
+
+        private static void ErroEmCadastrarChamado()
+        {
+            Console.WriteLine("Impossível Cadastrar Chamados!! Você não possui equipamentos cadastrados!");
+            Console.WriteLine("Aperte ENTER para continuar:");
+            Console.ReadLine();
+        }
+
+        private static void CadastrarNovoChamado(string[] lista, string[] listaChamados, int numeroDosChamados, DateTime[] DataDoChamado, Equipamento equipamento, Chamados chamados)
+        {
+            chamados.ListaDoChamado = listaChamados;
+            chamados.numeroDoChamado = numeroDosChamados;
+
+            equipamento.ListaDeEquipamento = lista;
+            Console.WriteLine("CHAMADO " + chamados.numeroDoChamado);
+            Console.WriteLine("Digite o Título do Chamado:");
+            chamados.Titulo = Console.ReadLine();
+            Console.WriteLine("Digite a Descrição do Chamado:");
+            chamados.Descricao = Console.ReadLine();
+            Console.WriteLine("Digite a Data do Chamado EX:(Dia/Mês/Ano Hora:Minuto):");
+            DataDoChamado[numeroDosChamados] = Convert.ToDateTime(Console.ReadLine());
+            Console.WriteLine("Digite o número do equipamento que o Chamado se refere:");
+            chamados.Equipamento = Convert.ToInt32(Console.ReadLine());
+            DateTime dataAtual = DateTime.Now;
+            TimeSpan diferenca = dataAtual.Subtract(DataDoChamado[numeroDosChamados]);
+            chamados.ListaDoChamado[numeroDosChamados] = "Chamado " + numeroDosChamados + "\nTítulo: " + chamados.Titulo + "\nDescrição:" + chamados.Descricao + "\nData Inicial do Chamado: " + DataDoChamado[numeroDosChamados] + "\nTempo desde a abertura do chamado:" + diferenca.TotalDays + " dias." + "\nEquipamento: " + lista[chamados.Equipamento];
+            Console.Clear();
+            Console.WriteLine("Chamado Registrado!\nAperte ENTER para continuar:");
+            Console.ReadLine();
         }
 
         private static void ExibirMenu()
