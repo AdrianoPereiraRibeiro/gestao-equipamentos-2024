@@ -17,37 +17,12 @@ namespace GestaoEquipamentos.ConsoleApp
             bool sairDoSistema = true;
             DateTime[] DataDoChamado = new DateTime[100];
             Menus menus = new Menus();
-            SwitchPrincipal switchPrincipal = new SwitchPrincipal();
-            
+            SwitchPrincipal SwitchsDoSistema = new SwitchPrincipal();          
             while (sairDoSistema)
             {
-                sairDoSistema = SwitchInicial(sairDoSistema, menus); if (sairDoSistema==false) { continue; }
-                switchPrincipal.SwitchEquipamentosEchamados(ref lista, ref listaChamados, ref numeroDoEstoque, ref numeroDosChamados, DataDoChamado);
+                sairDoSistema = SwitchsDoSistema.SwitchInicial(sairDoSistema, menus); if (sairDoSistema==false) { continue; }
+                SwitchsDoSistema.SwitchEquipamentosEchamados(ref lista, ref listaChamados, ref numeroDoEstoque, ref numeroDosChamados, DataDoChamado);
             }
-        }
-
-        private static bool SwitchInicial(bool sairDoSistema, Menus menus)
-        {
-            bool sairDoWhile = sairDoSistema;
-            while (sairDoWhile)
-            {
-                menus.MenuInicial();
-                switch (Convert.ToInt32(Console.ReadLine()))
-                {
-                    case 0: menus.ExibirMenuEquipamentos(); sairDoWhile = false; break;
-                    case 1: menus.ExibirMenuChamados(); sairDoWhile =false; break;
-                    case 2: sairDoSistema = false; sairDoWhile = false; break;
-                    default: Console.WriteLine("Opção Indisponível!"); Console.ReadLine(); break;
-                }
-            }
-            return sairDoSistema;
-        }
-
-
-
-
-
+        }     
     }
-
-
 }

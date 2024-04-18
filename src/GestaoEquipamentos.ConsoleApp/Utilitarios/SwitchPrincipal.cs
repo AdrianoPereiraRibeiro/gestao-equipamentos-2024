@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GestaoEquipamentos.ConsoleApp.ModuloChamados;
+using static GestaoEquipamentos.ConsoleApp.Program;
 
 namespace GestaoEquipamentos.ConsoleApp.Utilitarios
 {
@@ -26,7 +27,23 @@ namespace GestaoEquipamentos.ConsoleApp.Utilitarios
                 case 7: listaChamados = gerenciamentoDeChamados.RemoverChamado(listaChamados, numeroDosChamados); break;
                 default: gerenciamentoDeChamados.OpcaoIndisponivel(); break;
             }
-     
+           
+            }
+        public bool SwitchInicial(bool sairDoSistema, Menus menus)
+        {
+            bool sairDoWhile = sairDoSistema;
+            while (sairDoWhile)
+            {
+                menus.MenuInicial();
+                switch (Convert.ToInt32(Console.ReadLine()))
+                {
+                    case 0: menus.ExibirMenuEquipamentos(); sairDoWhile = false; break;
+                    case 1: menus.ExibirMenuChamados(); sairDoWhile = false; break;
+                    case 2: sairDoSistema = false; sairDoWhile = false; break;
+                    default: Console.WriteLine("Opção Indisponível!"); Console.ReadLine(); break;
+                }
+            }
+            return sairDoSistema;
         }
    
     }
