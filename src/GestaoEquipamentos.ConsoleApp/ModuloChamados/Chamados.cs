@@ -1,4 +1,5 @@
-﻿public class Chamados() 
+﻿namespace GestaoEquipamentos.ConsoleApp.ModuloChamados;
+public class Chamados() 
 {
     public string Titulo;
     public string Descricao;
