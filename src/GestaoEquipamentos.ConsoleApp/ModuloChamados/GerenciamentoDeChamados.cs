@@ -1,11 +1,11 @@
 ﻿namespace GestaoEquipamentos.ConsoleApp.ModuloChamados;
 using GestaoEquipamentos.ConsoleApp.ModuloEquipamentos;
 
-public class GerenciamentoDeChamados()
+public partial class GerenciamentoDeChamados()
 {
    
     public string[] EditarChamados(string[] listaChamados, string[] lista,int numeroChamados, DateTime[] DataDosChamados)
-    {
+    {   RepositorioChamados repositorio = new RepositorioChamados();
         Chamados chamados = new Chamados();
         Equipamento equipamento = new Equipamento();       
         equipamento.ListaDeEquipamento = lista;
@@ -22,19 +22,20 @@ public class GerenciamentoDeChamados()
             chamados.Descricao = Console.ReadLine();
             Console.WriteLine("Digite o número do equipamento que o Chamado se refere:");
             chamados.Equipamento = Convert.ToInt32(Console.ReadLine());
-            DateTime dataAtual = DateTime.Now;
-            TimeSpan diferenca = dataAtual.Subtract(chamados.DataDoChamado[numeroChamado]);           
-            chamados.ListaDoChamado[numeroChamado] = "Chamado " + numeroChamado + "\nTítulo: " + chamados.Titulo + "\nDescrição:" + chamados.Descricao + "\nData Inicial do Chamado: " + chamados.DataDoChamado[numeroChamado] +"\nTempo desde a abertura do chamado:"+diferenca.TotalDays+" dias."+ "\nEquipamento: " + lista[chamados.Equipamento];
+            repositorio.EditarChamado(lista, chamados, numeroChamado);
             Console.Clear();
             Console.WriteLine("Chamado Editado!\nAperte ENTER para continuar:");
             Console.ReadLine();
-            
+
         }
         return chamados.ListaDoChamado;
 
     }
+
+    
+
     public string[] RemoverChamado(string[] listaChamados,  int numeroChamados)
-    {
+    {   RepositorioChamados repositorio = new RepositorioChamados();
         Chamados chamados = new Chamados();
         Equipamento equipamento = new Equipamento();   
         chamados.ListaDoChamado = listaChamados;
@@ -43,12 +44,15 @@ public class GerenciamentoDeChamados()
         {
             Console.WriteLine("Digite o número do chamado a ser removido");
             int numeroChamadoExclusao = Convert.ToInt32(Console.ReadLine());
-            chamados.ListaDoChamado[numeroChamadoExclusao] = null;
+            repositorio.ExcluirChamado(chamados, numeroChamadoExclusao);
             Console.WriteLine("Exclusão efetuada com sucesso!");
             Console.ReadLine();
         }
         return chamados.ListaDoChamado;
     }
+
+   
+
     public  void MostrarChamados(string[] listaChamados, int numeroDosChamados)
     {
         if (numeroDosChamados == 0) { Console.WriteLine("Não exite nenhum chamado cadastrado!\nAperte ENTER para continuar:"); Console.ReadLine(); }
@@ -92,7 +96,7 @@ public class GerenciamentoDeChamados()
     {
         chamados.ListaDoChamado = listaChamados;
         chamados.numeroDoChamado = numeroDosChamados;
-
+        RepositorioChamados repositorio = new RepositorioChamados();
         equipamento.ListaDeEquipamento = lista;
         Console.WriteLine("CHAMADO " + chamados.numeroDoChamado);
         Console.WriteLine("Digite o Título do Chamado:");
@@ -103,9 +107,7 @@ public class GerenciamentoDeChamados()
         DataDoChamado[numeroDosChamados] = Convert.ToDateTime(Console.ReadLine());
         Console.WriteLine("Digite o número do equipamento que o Chamado se refere:");
         chamados.Equipamento = Convert.ToInt32(Console.ReadLine());
-        DateTime dataAtual = DateTime.Now;
-        TimeSpan diferenca = dataAtual.Subtract(DataDoChamado[numeroDosChamados]);
-        chamados.ListaDoChamado[numeroDosChamados] = "Chamado " + numeroDosChamados + "\nTítulo: " + chamados.Titulo + "\nDescrição:" + chamados.Descricao + "\nData Inicial do Chamado: " + DataDoChamado[numeroDosChamados] + "\nTempo desde a abertura do chamado:" + diferenca.TotalDays + " dias." + "\nEquipamento: " + lista[chamados.Equipamento];
+        repositorio.CadastrarNovoChamado(lista, numeroDosChamados, DataDoChamado, chamados);
         Console.Clear();
         Console.WriteLine("Chamado Registrado!\nAperte ENTER para continuar:");
         Console.ReadLine();

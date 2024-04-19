@@ -6,7 +6,7 @@ namespace GestaoEquipamentos.ConsoleApp.ModuloEquipamentos
     {
 
         public string[] CadastrarEquipamento(string[] lista, int numeroDoEstoque)
-        {
+        {   RepositorioEquipamento repositorio = new RepositorioEquipamento();
             Equipamento equipamento = new Equipamento();
             equipamento.ListaDeEquipamento = lista;
             equipamento.numeroDoEstoque = numeroDoEstoque;
@@ -27,22 +27,15 @@ namespace GestaoEquipamentos.ConsoleApp.ModuloEquipamentos
                     Console.WriteLine("O nome deve ter no mínimo 6 caracteres.\nDIGITE NOVAMENTE O NOME:");
                     equipamento.nome = Console.ReadLine();
                 }
-            }
-
-
+            }          
+            repositorio.CadastrarEquipamento(numeroDoEstoque, equipamento);
             Console.WriteLine("Equipamento Registrado!\nAperte ENTER para continuar:");
             Console.ReadLine();
-
-
-            equipamento.ListaDeEquipamento[numeroDoEstoque] = "Produto " + equipamento.numeroDoEstoque + "\nNome:" + equipamento.nome + "\nPreço:" + equipamento.preco + "\nNumero de série:" + equipamento.numeroDeSerie + "\nData de fabricação:" + equipamento.DataDeFabricacao + "\nFabricante:" + equipamento.Fabricante + "\n-------------------------------------------------------------------------------";
-
-
-            Console.Clear();
             return equipamento.ListaDeEquipamento;
-        }
-
+        }    
         public string[] EditarEquipamentos(string[] lista)
         {
+            RepositorioEquipamento repositorio = new RepositorioEquipamento();
             Equipamento equipamento = new Equipamento();
             equipamento.ListaDeEquipamento = lista;
             Console.WriteLine("Digite o numero do produto a ser alterado:");
@@ -66,32 +59,25 @@ namespace GestaoEquipamentos.ConsoleApp.ModuloEquipamentos
                     equipamento.nome = Console.ReadLine();
                 }
             }
-
+            repositorio.EditarEquipamento(equipamento, numeroProdutoEditado);
             Console.WriteLine("Equipamento Editado!\nAperte ENTER para continuar:");
             Console.ReadLine();
-
-
-            equipamento.ListaDeEquipamento[numeroProdutoEditado] = "Produto " + equipamento.numeroDoEstoque + "\nNome:" + equipamento.nome + "\nPreço:" + equipamento.preco + "\nNumero de série:" + equipamento.numeroDeSerie + "\nData de fabricação:" + equipamento.DataDeFabricacao + "\nFabricante:" + equipamento.Fabricante + "\n-------------------------------------------------------------------------------";
             return equipamento.ListaDeEquipamento;
-
         }
+
+       
+
         public string[] ExcluirEquipamentos(string[] lista)
         {
-
-            Equipamento equipamento = new Equipamento();
+            RepositorioEquipamento repositorio = new RepositorioEquipamento();
             Console.WriteLine("Digite o número do equipamento a ser EXCLUIDO:");
             int exclusao = Convert.ToInt32(Console.ReadLine());
-            lista[exclusao] = null;
+            repositorio.ExcluirEquipamento(lista, exclusao);
             Console.WriteLine("Equipamento Excluido!\nAperte ENTER para continuar:");
             Console.ReadLine();
             return lista;
         }
 
-
-
-
+      
+        }
     }
-
-
-
-}
